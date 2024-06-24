@@ -6,7 +6,7 @@ import SearchResultCard from "@/components/custom/SearchResultCard";
 import SearchResultInfo from "@/components/custom/SearchResultInfo";
 import SortOptionDropdown from "@/components/custom/SortOptionDropdown";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export type SearchState = {
   searchQuery: string;
@@ -17,7 +17,6 @@ export type SearchState = {
 
 const SearchPage = () => {
   const { city } = useParams();
-  const navigate = useNavigate();
   const [searchState, setSearchState] = useState<SearchState>({
     searchQuery: "",
     page: 1,
@@ -57,9 +56,6 @@ const SearchPage = () => {
       searchQuery: searchFormData.searchQuery,
       page: 1,
     }));
-    navigate({
-      pathname: `/search/${searchFormData.searchQuery}`,
-    });
   };
 
   const resetSearch = () => {
