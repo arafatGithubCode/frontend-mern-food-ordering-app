@@ -139,3 +139,54 @@ export const useGetMyRestaurantOrders = () => {
 
   return { orders, isLoading };
 };
+
+type UpdateOrderStatus = {
+  orderId: string;
+  status: string;
+};
+
+export const useUpdateMyRestaurantOrderStatus = () => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  const updateMyRestaurantOrderStatusRequest = async (
+    updateOrderStatus: UpdateOrderStatus
+  ) => {
+    const accessToken = await getAccessTokenSilently();
+
+    const response = await fetch(
+      `${VITE_API_BASE_URL}/api/my/restaurant/order/${updateOrderStatus.orderId}/status`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: updateOrderStatus.status }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to update order status");
+    }
+
+    return response.json();
+  };
+
+  const {
+    mutateAsync: updateRestaurantOrderStatus,
+    isError,
+    isLoading,
+    isSuccess,
+    reset,
+  } = useMutation(updateMyRestaurantOrderStatusRequest);
+
+  if (isError) {
+    toast.error("Unable to update order");
+    reset();
+  }
+  if (isSuccess) {
+    toast.success("Order updated");
+  }
+
+  return { updateRestaurantOrderStatus, isLoading };
+};
