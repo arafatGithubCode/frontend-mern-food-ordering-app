@@ -110,3 +110,32 @@ export const useUpdateMyRestaurant = () => {
 
   return { isLoading, updateRestaurant };
 };
+
+export const useGetMyRestaurantOrders = () => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  const getMyRestaurantOrdersRequest = async () => {
+    const accessToken = await getAccessTokenSilently();
+
+    const response = await fetch(
+      `${VITE_API_BASE_URL}/api/my/restaurant/order`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to get restaurant owner orders");
+    }
+
+    return response.json();
+  };
+
+  const { data: orders, isLoading } = useQuery(
+    "fetchMyRestaurantOrders",
+    getMyRestaurantOrdersRequest
+  );
+
+  return { orders, isLoading };
+};
