@@ -101,8 +101,11 @@ const SearchPage = () => {
           />
         </div>
 
-        {results.data.map((restaurant) => (
-          <SearchResultCard restaurant={restaurant} />
+        {results.data.map((restaurant, index) => (
+          <SearchResultCard
+            key={`search-result-cart-${index}-${new Date()}`}
+            restaurant={restaurant}
+          />
         ))}
         <PaginationSelector
           page={results.pagination.page}

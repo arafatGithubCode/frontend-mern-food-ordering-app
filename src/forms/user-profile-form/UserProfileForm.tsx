@@ -43,6 +43,13 @@ const UserProfileForm = ({
 }: Props) => {
   const form = useForm<UserFormData>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: currentUser.email || "",
+      name: currentUser.name || "",
+      addressLine1: currentUser.addressLine1 || "",
+      city: currentUser.city || "",
+      country: currentUser.country || "",
+    },
   });
 
   useEffect(() => {

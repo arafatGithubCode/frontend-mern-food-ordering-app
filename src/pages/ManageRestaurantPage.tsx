@@ -33,8 +33,8 @@ const ManageRestaurantPage = () => {
             {orders?.length}{" "}
             {orders?.length === 1 ? "active order" : "active orders"}
           </h2>
-          {orders?.map((order) => (
-            <OrderItemCard order={order} />
+          {orders?.map((order, index) => (
+            <OrderItemCard key={`${index}-${new Date()}`} order={order} />
           ))}
         </TabsContent>
         <TabsContent value="manage-restaurant">

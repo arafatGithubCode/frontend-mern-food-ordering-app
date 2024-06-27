@@ -1,4 +1,3 @@
-import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,13 +33,14 @@ const SortOptionDropdown = ({ onChange, sortOption }: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="cursor-pointer">
-        <Button variant="outline" className="w-full">
+        <p className="w-full bg-slate-100 hover:bg-slate-200 px-1 py-2 border">
           Sort by: {selectedSortLabel}
-        </Button>
+        </p>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {SORT_OPTIONS.map((option) => (
+        {SORT_OPTIONS.map((option, index) => (
           <DropdownMenuItem
+            key={`${option}-${index}`}
             className="cursor-pointer"
             onClick={() => onChange(option.value)}
           >
