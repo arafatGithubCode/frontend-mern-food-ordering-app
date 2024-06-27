@@ -23,7 +23,7 @@ type CheckoutSessionRequest = {
 export const useGetMyOrders = () => {
   const { getAccessTokenSilently } = useAuth0();
 
-  const getMyOrdersRequest = async (): Promise<Order> => {
+  const getMyOrdersRequest = async (): Promise<Order[]> => {
     const accessToken = await getAccessTokenSilently();
 
     const response = await fetch(`${VITE_API_BASE_URL}/api/order`, {
