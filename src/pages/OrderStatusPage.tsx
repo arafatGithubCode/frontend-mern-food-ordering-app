@@ -1,6 +1,8 @@
 import { useGetMyOrders } from "@/api/OrderApi";
+import OrderStatusDetail from "@/components/custom/OrderStatusDetail";
 import OrderStatusHeader from "@/components/custom/OrderStatusHeader";
 import Spinner from "@/components/custom/Spinner";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const OrderStatusPage = () => {
   const { orders, isLoading } = useGetMyOrders();
@@ -17,6 +19,15 @@ const OrderStatusPage = () => {
       {orders.map((order) => (
         <div className="space-y-10 p-10 bg-gray-50 rounded-lg">
           <OrderStatusHeader order={order} />
+          <div className="grid gap-10 md:grid-cols-2">
+            <OrderStatusDetail order={order} />
+            <AspectRatio ratio={16 / 5}>
+              <img
+                src={order.restaurant.imageUrl}
+                className="rounded-md object-cover h-full w-full"
+              />
+            </AspectRatio>
+          </div>
         </div>
       ))}
     </div>
